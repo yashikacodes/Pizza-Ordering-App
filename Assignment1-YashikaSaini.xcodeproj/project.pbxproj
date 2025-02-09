@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE1A5D6B2D58163E006F2D68 /* pizzaImgage.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1A5D6A2D58163E006F2D68 /* pizzaImgage.png */; };
 		CE1A63E42D58108E008A03ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A63E32D58108E008A03ED /* AppDelegate.swift */; };
 		CE1A63E62D58108E008A03ED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A63E52D58108E008A03ED /* SceneDelegate.swift */; };
 		CE1A63E82D58108E008A03ED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A63E72D58108E008A03ED /* ViewController.swift */; };
 		CE1A63EB2D58108E008A03ED /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CE1A63EA2D58108E008A03ED /* Base */; };
 		CE1A63ED2D581090008A03ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1A63EC2D581090008A03ED /* Assets.xcassets */; };
 		CE1A63F02D581090008A03ED /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CE1A63EF2D581090008A03ED /* Base */; };
+		CE1A63F92D5810AB008A03ED /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1A63F82D5810AB008A03ED /* WebKit.framework */; };
+		CE1A63FC2D5810D0008A03ED /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A63FB2D5810D0008A03ED /* OrderViewController.swift */; };
+		CE1A63FE2D5810DE008A03ED /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A63FD2D5810DE008A03ED /* SettingsViewController.swift */; };
+		CE1A64002D5810F0008A03ED /* WebsitePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A63FF2D5810F0008A03ED /* WebsitePageViewController.swift */; };
+		CE1A64032D581112008A03ED /* pizzaLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1A64022D581112008A03ED /* pizzaLogo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE1A5D6A2D58163E006F2D68 /* pizzaImgage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaImgage.png; sourceTree = "<group>"; };
 		CE1A63E02D58108E008A03ED /* Assignment1-YashikaSaini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Assignment1-YashikaSaini.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1A63E32D58108E008A03ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE1A63E52D58108E008A03ED /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +31,11 @@
 		CE1A63EC2D581090008A03ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE1A63EF2D581090008A03ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE1A63F12D581090008A03ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE1A63F82D5810AB008A03ED /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		CE1A63FB2D5810D0008A03ED /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		CE1A63FD2D5810DE008A03ED /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		CE1A63FF2D5810F0008A03ED /* WebsitePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsitePageViewController.swift; sourceTree = "<group>"; };
+		CE1A64022D581112008A03ED /* pizzaLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaLogo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE1A63F92D5810AB008A03ED /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +55,7 @@
 			children = (
 				CE1A63E22D58108E008A03ED /* Assignment1-YashikaSaini */,
 				CE1A63E12D58108E008A03ED /* Products */,
+				CE1A63F72D5810AB008A03ED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +70,44 @@
 		CE1A63E22D58108E008A03ED /* Assignment1-YashikaSaini */ = {
 			isa = PBXGroup;
 			children = (
+				CE1A64012D581102008A03ED /* images */,
+				CE1A63FA2D5810B2008A03ED /* view controllers */,
 				CE1A63E32D58108E008A03ED /* AppDelegate.swift */,
 				CE1A63E52D58108E008A03ED /* SceneDelegate.swift */,
-				CE1A63E72D58108E008A03ED /* ViewController.swift */,
 				CE1A63E92D58108E008A03ED /* Main.storyboard */,
 				CE1A63EC2D581090008A03ED /* Assets.xcassets */,
 				CE1A63EE2D581090008A03ED /* LaunchScreen.storyboard */,
 				CE1A63F12D581090008A03ED /* Info.plist */,
 			);
 			path = "Assignment1-YashikaSaini";
+			sourceTree = "<group>";
+		};
+		CE1A63F72D5810AB008A03ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE1A63F82D5810AB008A03ED /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE1A63FA2D5810B2008A03ED /* view controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE1A63E72D58108E008A03ED /* ViewController.swift */,
+				CE1A63FB2D5810D0008A03ED /* OrderViewController.swift */,
+				CE1A63FD2D5810DE008A03ED /* SettingsViewController.swift */,
+				CE1A63FF2D5810F0008A03ED /* WebsitePageViewController.swift */,
+			);
+			path = "view controllers";
+			sourceTree = "<group>";
+		};
+		CE1A64012D581102008A03ED /* images */ = {
+			isa = PBXGroup;
+			children = (
+				CE1A5D6A2D58163E006F2D68 /* pizzaImgage.png */,
+				CE1A64022D581112008A03ED /* pizzaLogo.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +171,8 @@
 				CE1A63ED2D581090008A03ED /* Assets.xcassets in Resources */,
 				CE1A63F02D581090008A03ED /* Base in Resources */,
 				CE1A63EB2D58108E008A03ED /* Base in Resources */,
+				CE1A5D6B2D58163E006F2D68 /* pizzaImgage.png in Resources */,
+				CE1A64032D581112008A03ED /* pizzaLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +186,9 @@
 				CE1A63E82D58108E008A03ED /* ViewController.swift in Sources */,
 				CE1A63E42D58108E008A03ED /* AppDelegate.swift in Sources */,
 				CE1A63E62D58108E008A03ED /* SceneDelegate.swift in Sources */,
+				CE1A64002D5810F0008A03ED /* WebsitePageViewController.swift in Sources */,
+				CE1A63FE2D5810DE008A03ED /* SettingsViewController.swift in Sources */,
+				CE1A63FC2D5810D0008A03ED /* OrderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
