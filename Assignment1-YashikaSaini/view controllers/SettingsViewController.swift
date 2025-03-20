@@ -13,6 +13,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var phoneNumberTextField: UITextField!
     
+    @IBAction func unwindToSettings(sender: UIStoryboardSegue) { }
+    
     @IBAction func submitPressed(_ sender: UIButton) {
         let name = nameTextField.text ?? "No Name"
         let email = emailTextField.text ?? "No Email"

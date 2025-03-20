@@ -12,49 +12,91 @@ class OrderViewController: UIViewController {
     @IBOutlet var deliveryDatePicker: UIDatePicker!
     @IBOutlet var addressTextField: UITextField!
     @IBOutlet var sizeSegmentControl: UISegmentedControl!
-    @IBOutlet var meatToppingsSwitch: UISwitch!
-    @IBOutlet var vegetableToppingsSwitch: UISwitch!
-    
-    @IBAction func placeOrderPressed(_ sender: UIButton) {
-        let date = deliveryDatePicker.date
-        let address = addressTextField.text ?? "No Address"
-        let size = sizeSegmentControl.titleForSegment(at: sizeSegmentControl.selectedSegmentIndex) ?? "Unknown"
-        let meatToppings = meatToppingsSwitch.isOn ? "Yes" : "No"
-        let vegetableToppings = vegetableToppingsSwitch.isOn ? "Yes" : "No"
 
-        let message = """
-        Delivery Date: \(date)
-        Address: \(address)
-        Pizza Size: \(size)
-        Meat Toppings: \(meatToppings)
-        Vegetable Toppings: \(vegetableToppings)
-        """
+    // Meat Toppings Switches
+    @IBOutlet var meatSwitch1: UISwitch!
+    @IBOutlet var meatSwitch2: UISwitch!
+    @IBOutlet var meatSwitch3: UISwitch!
+    
+    // Vegetable Toppings Switches
+    @IBOutlet var vegetableSwitch1: UISwitch!
+    @IBOutlet var vegetableSwitch2: UISwitch!
+    @IBOutlet var vegetableSwitch3: UISwitch!
 
-        let alert = UIAlertController(title: "Order Summary", message: message, preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "OK", style: .default) { _ in
-                self.dismiss(animated: true)
-        }
-        alert.addAction(confirmAction)
-        present(alert, animated: true)
-    }
+    // Avatar Selection
+    @IBOutlet var avatarImageView1: UIImageView!
+    @IBOutlet var avatarImageView2: UIImageView!
+    @IBOutlet var avatarImageView3: UIImageView!
     
-    
+    let avatarImages = ["avatar1", "avatar2", "avatar3"] // Image names in Assets
+    var selectedAvatarIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let touchPoint = touch.location(in: self.view)
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // Detect touch on avatar images
+        if avatarImageView1.frame.contains(touchPoint) {
+            selectedAvatarIndex = 0
+        } else if avatarImageView2.frame.contains(touchPoint) {
+            selectedAvatarIndex = 1
+        } else if avatarImageView3.frame.contains(touchPoint) {
+            selectedAvatarIndex = 2
+        }
     }
-    */
+
+    @IBAction func placeOrderPressed(_ sender: UIButton) {
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        let order = OrderData()
+        
+        // Collect order details
+        let date = deliveryDatePicker.date.description
+        let address = addressTextField.text ?? "No Address"
+        let size = sizeSegmentControl.selectedSegmentIndex
+        
+        // Collect selected meat toppings
+        var meatToppings: [String] = []
+        if meatSwitch1.isOn { meatToppings.append("Chicken") }
+        if meatSwitch2.isOn { meatToppings.append("Beef") }
+        if meatSwitch3.isOn { meatToppings.append("Pork") }
+        let meatToppingsString = meatToppings.isEmpty ? "None" : meatToppings.joined(separator: ", ")
+
+        // Collect selected vegetable toppings
+        var vegetableToppings: [String] = []
+        if vegetableSwitch1.isOn { vegetableToppings.append("Carrot") }
+        if vegetableSwitch2.isOn { vegetableToppings.append("Cucumber") }
+        if vegetableSwitch3.isOn { vegetableToppings.append("Spinach") }
+        let vegetableToppingsString = vegetableToppings.isEmpty ? "None" : vegetableToppings.joined(separator: ", ")
+
+        let avatar = selectedAvatarIndex
+
+        // Initialize order data
+        order.initWithData(
+            id: 0,
+            date: date,
+            address: address,
+            size: size,
+            meatToppings: meatToppingsString,
+            vegToppings: vegetableToppingsString
+        )
+
+        // Save to database and show confirmation
+        if mainDelegate.insertIntoDatabase(order: order) {
+            let alert = UIAlertController(title: "Success", message: "Order placed successfully!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                self.dismiss(animated: true)
+            })
+            present(alert, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Failed to save order.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        }
+    }
 
 }
