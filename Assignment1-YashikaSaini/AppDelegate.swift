@@ -11,106 +11,120 @@ import SQLite3
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var databaseName = "orders.db"
-        var databasePath = ""
-        var orders: [OrderData] = []
+    var databaseName : String = "ordersdb.db"
+    var databasePath : String = ""
+    var orders: [OrderData] = []
 
-        func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            let documentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-            let documentsDir = documentPaths[0]
-            databasePath = documentsDir.appending("/" + databaseName)
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let documentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let documentsDir = documentPaths[0]
+        databasePath = documentsDir.appending("/" + databaseName)
 
-            checkAndCreateDatabase()
-            readDataFromDatabase()
+        checkAndCreateDatabase()
+        readDataFromDatabase()
+        
+        return true
+    }
+
+    func checkAndCreateDatabase() {
+        var success = false
+        let fm = FileManager.default
+        
+        success = fm.fileExists(atPath: databasePath)
+        
+        if success {return}
+
+        let databasePathFromApp = Bundle.main.resourcePath?.appending("/" + databaseName)
+        try? fm.copyItem(atPath: databasePathFromApp!, toPath: databasePath)
+        
+        return
+    }
+
+    func readDataFromDatabase() {
+        orders.removeAll()
+        var db: OpaquePointer? = nil
+
+        if sqlite3_open(databasePath, &db) == SQLITE_OK {
+            print("Successfully opened db at \(databasePath)")
+            let queryStatementString : String = "select * from orders;"
+            var queryStatement: OpaquePointer? = nil
+
+            if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+                while sqlite3_step(queryStatement) == SQLITE_ROW {
+                    let id : Int = Int(sqlite3_column_int(queryStatement, 0))
+                    let date = String(cString: sqlite3_column_text(queryStatement, 1))
+                    let address = String(cString: sqlite3_column_text(queryStatement, 2))
+                    let size = Int(sqlite3_column_int(queryStatement, 3))
+                    let meatToppings = String(cString: sqlite3_column_text(queryStatement, 4))
+                    let vegToppings = String(cString: sqlite3_column_text(queryStatement, 5))
+                    let avatar = String(cString: sqlite3_column_text(queryStatement, 6)) // Avatar field retrieval
+
+                    let order = OrderData()
+                    order.initWithData(id: id, date: date, address: address, size: size, meatToppings: meatToppings, vegToppings: vegToppings, avatar: avatar)
+                    
+                    orders.append(order)
+                    print("Results: ")
+                    print("\(id) | \(date) | \(address) | \(size) | \(meatToppings) | \(vegToppings) | \(avatar)")
+                }
+                
+                sqlite3_finalize(queryStatement)
+            }else{
+                print("Select statement couldn't be prepared. \(String(cString: sqlite3_errmsg(db)))")
+            }
+            sqlite3_close(db)
+        }else{
+            print("Unable to open database.")
+        }
+    }
+
+    func insertIntoDatabase(order: OrderData) -> Bool {
+        var db: OpaquePointer? = nil
+        var returnCode : Bool = true
+
+        if sqlite3_open(databasePath, &db) == SQLITE_OK {
             
-            return true
-        }
+            print("Successfully opened Database.")
+            
+            let insertStatementString = "INSERT INTO orders VALUES (NULL, ?, ?, ?, ?, ?, ?)" // Updated to include avatar
+            var insertStatement: OpaquePointer? = nil
 
-        func checkAndCreateDatabase() {
-            let fm = FileManager.default
-            if fm.fileExists(atPath: databasePath) { return }
+            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
+                sqlite3_bind_text(insertStatement, 1, order.deliveryDate, -1, nil)
+                sqlite3_bind_text(insertStatement, 2, order.address, -1, nil)
+                sqlite3_bind_int(insertStatement, 3, Int32(order.size!))
+                sqlite3_bind_text(insertStatement, 4, order.meatToppings, -1, nil)
+                sqlite3_bind_text(insertStatement, 5, order.vegToppings, -1, nil)
+                sqlite3_bind_text(insertStatement, 6, order.avatar, -1, nil) // Bind the avatar string
 
-            let databasePathFromApp = Bundle.main.resourcePath?.appending("/" + databaseName)
-            try? fm.copyItem(atPath: databasePathFromApp!, toPath: databasePath)
-        }
-
-        func readDataFromDatabase() {
-            orders.removeAll()
-            var db: OpaquePointer?
-
-            if sqlite3_open(databasePath, &db) == SQLITE_OK {
-                let queryStatementString = "SELECT * FROM orders"
-                var queryStatement: OpaquePointer?
-
-                if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
-                    while sqlite3_step(queryStatement) == SQLITE_ROW {
-                        let id = Int(sqlite3_column_int(queryStatement, 0))
-                        let date = String(cString: sqlite3_column_text(queryStatement, 1))
-                        let address = String(cString: sqlite3_column_text(queryStatement, 2))
-                        let size = Int(sqlite3_column_int(queryStatement, 3))
-                        let meatToppings = String(cString: sqlite3_column_text(queryStatement, 4))
-                        let vegToppings = String(cString: sqlite3_column_text(queryStatement, 5))
-                        
-
-                        let order = OrderData()
-                        order.initWithData(id: id, date: date, address: address, size: size, meatToppings: meatToppings, vegToppings: vegToppings)
-                        
-                        orders.append(order)
-                    }
-                    sqlite3_finalize(queryStatement)
+                if sqlite3_step(insertStatement) == SQLITE_DONE {
+                    let rowId = sqlite3_last_insert_rowid(db)
+                    print("Insert statement worked with row: \(rowId)")
+                }else{
+                    print("Couldn't insert \(String(cString: sqlite3_errmsg(db)))")
+                    returnCode = false
                 }
-                sqlite3_close(db)
+                sqlite3_finalize(insertStatement)
+            }else{
+                print("Insert statement couldn't be prepared. \(String(cString: sqlite3_errmsg(db)))")
+                returnCode = false
             }
+            sqlite3_close(db)
+        }else{
+            print("Couldn't Open")
+            returnCode = false
         }
-
-        func insertIntoDatabase(order: OrderData) -> Bool {
-            var db: OpaquePointer?
-            var returnCode = true
-
-            if sqlite3_open(databasePath, &db) == SQLITE_OK {
-                let insertStatementString = "INSERT INTO orders VALUES (NULL, ?, ?, ?, ?, ?)"
-                var insertStatement: OpaquePointer?
-
-                if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
-                    sqlite3_bind_text(insertStatement, 1, order.deliveryDate, -1, nil)
-                    sqlite3_bind_text(insertStatement, 2, order.address, -1, nil)
-                    sqlite3_bind_int(insertStatement, 3, Int32(order.size!))
-                    sqlite3_bind_text(insertStatement, 4, order.meatToppings, -1, nil)
-                    sqlite3_bind_text(insertStatement, 5, order.vegToppings, -1, nil)
-
-                    if sqlite3_step(insertStatement) != SQLITE_DONE {
-                        returnCode = false
-                    }
-                    sqlite3_finalize(insertStatement)
-                }
-                sqlite3_close(db)
-            }
-            return returnCode
-        }
-    
-    
-
-
-
-    //func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-     //   return true
-    //}
+        return returnCode
+    }
 
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+        // Release any resources that were specific to the discarded scenes.
     }
-
-
+    
+    
 }
-

@@ -15,14 +15,17 @@ class OrderData: NSObject {
     var size: Int?
     var meatToppings: String?
     var vegToppings: String?
+    var avatar: String?
         
-    func initWithData(id: Int, date: String, address: String, size: Int, meatToppings: String, vegToppings: String) {
+    func initWithData(id: Int, date: String, address: String, size: Int, meatToppings: String, vegToppings: String, avatar: String) {
         self.id = id
         self.deliveryDate = date
         self.address = address
         self.size = size
         self.meatToppings = meatToppings
         self.vegToppings = vegToppings
+        self.avatar = avatar
+        
     }
 }
 

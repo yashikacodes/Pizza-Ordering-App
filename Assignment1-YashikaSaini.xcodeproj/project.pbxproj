@@ -23,6 +23,7 @@
 		CE5193612D8B70DD00F8FAA8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5193602D8B70D600F8FAA8 /* libsqlite3.tbd */; };
 		CE5193652D8B8EC000F8FAA8 /* carLogohehhe.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = CE5193642D8B8EC000F8FAA8 /* carLogohehhe.jpeg */; };
 		CE5193672D8BB59700F8FAA8 /* OrderHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5193662D8BB59700F8FAA8 /* OrderHistoryViewController.swift */; };
+		CEF18ABE2D8D1A8900A19EC4 /* OrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF18ABD2D8D1A8900A19EC4 /* OrderCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,9 +43,10 @@
 		CE1A64022D581112008A03ED /* pizzaLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaLogo.png; sourceTree = "<group>"; };
 		CE51935E2D8B6C9500F8FAA8 /* OrderData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderData.swift; sourceTree = "<group>"; };
 		CE5193602D8B70D600F8FAA8 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		CE5193632D8B725E00F8FAA8 /* orders.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = orders.db; sourceTree = "<group>"; };
 		CE5193642D8B8EC000F8FAA8 /* carLogohehhe.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = carLogohehhe.jpeg; sourceTree = "<group>"; };
 		CE5193662D8BB59700F8FAA8 /* OrderHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryViewController.swift; sourceTree = "<group>"; };
+		CEF18ABC2D8D0AF400A19EC4 /* ordersdb.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = ordersdb.db; sourceTree = "<group>"; };
+		CEF18ABD2D8D1A8900A19EC4 /* OrderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +82,7 @@
 		CE1A63E22D58108E008A03ED /* Assignment1-YashikaSaini */ = {
 			isa = PBXGroup;
 			children = (
-				CE5193622D8B71F100F8FAA8 /* database */,
+				CEF18ABB2D8D0ADF00A19EC4 /* database */,
 				CE1A64012D581102008A03ED /* images */,
 				CE1A63FA2D5810B2008A03ED /* view controllers */,
 				CE1A63E32D58108E008A03ED /* AppDelegate.swift */,
@@ -90,6 +92,7 @@
 				CE1A63EE2D581090008A03ED /* LaunchScreen.storyboard */,
 				CE1A63F12D581090008A03ED /* Info.plist */,
 				CE51935E2D8B6C9500F8FAA8 /* OrderData.swift */,
+				CEF18ABD2D8D1A8900A19EC4 /* OrderCell.swift */,
 			);
 			path = "Assignment1-YashikaSaini";
 			sourceTree = "<group>";
@@ -125,10 +128,10 @@
 			path = images;
 			sourceTree = "<group>";
 		};
-		CE5193622D8B71F100F8FAA8 /* database */ = {
+		CEF18ABB2D8D0ADF00A19EC4 /* database */ = {
 			isa = PBXGroup;
 			children = (
-				CE5193632D8B725E00F8FAA8 /* orders.db */,
+				CEF18ABC2D8D0AF400A19EC4 /* ordersdb.db */,
 			);
 			path = database;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				CE1A63E82D58108E008A03ED /* ViewController.swift in Sources */,
 				CE1A63E42D58108E008A03ED /* AppDelegate.swift in Sources */,
 				CE1A63E62D58108E008A03ED /* SceneDelegate.swift in Sources */,
+				CEF18ABE2D8D1A8900A19EC4 /* OrderCell.swift in Sources */,
 				CE51935F2D8B6C9500F8FAA8 /* OrderData.swift in Sources */,
 				CE1A64002D5810F0008A03ED /* WebsitePageViewController.swift in Sources */,
 				CE1A63FE2D5810DE008A03ED /* SettingsViewController.swift in Sources */,

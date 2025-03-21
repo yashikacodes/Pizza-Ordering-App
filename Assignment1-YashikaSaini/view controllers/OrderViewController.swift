@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OrderViewController: UIViewController {
+class OrderViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var deliveryDatePicker: UIDatePicker!
     @IBOutlet var addressTextField: UITextField!
@@ -29,24 +29,29 @@ class OrderViewController: UIViewController {
     @IBOutlet var avatarImageView3: UIImageView!
     
     let avatarImages = ["avatar1", "avatar2", "avatar3"] // Image names in Assets
-    var selectedAvatarIndex = 0
+    var selectedAvatar: String = "avatar1" // Default to "avatar1"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
 
+    // Detect touch on avatar images
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let touchPoint = touch.location(in: self.view)
+        if let touch = touches.first {
+            let touchPoint = touch.location(in: self.view)
 
-        // Detect touch on avatar images
-        if avatarImageView1.frame.contains(touchPoint) {
-            selectedAvatarIndex = 0
-        } else if avatarImageView2.frame.contains(touchPoint) {
-            selectedAvatarIndex = 1
-        } else if avatarImageView3.frame.contains(touchPoint) {
-            selectedAvatarIndex = 2
+            // Detect touch on avatar images and update the selectedAvatar string
+            if avatarImageView1.frame.contains(touchPoint) {
+                selectedAvatar = "avatar1"
+            } else if avatarImageView2.frame.contains(touchPoint) {
+                selectedAvatar = "avatar2"
+            } else if avatarImageView3.frame.contains(touchPoint) {
+                selectedAvatar = "avatar3"
+            }
         }
     }
 
@@ -73,7 +78,8 @@ class OrderViewController: UIViewController {
         if vegetableSwitch3.isOn { vegetableToppings.append("Spinach") }
         let vegetableToppingsString = vegetableToppings.isEmpty ? "None" : vegetableToppings.joined(separator: ", ")
 
-        let avatar = selectedAvatarIndex
+        // Use the selected avatar (as a string)
+        let avatar = selectedAvatar
 
         // Initialize order data
         order.initWithData(
@@ -82,7 +88,7 @@ class OrderViewController: UIViewController {
             address: address,
             size: size,
             meatToppings: meatToppingsString,
-            vegToppings: vegetableToppingsString
+            vegToppings: vegetableToppingsString, avatar: avatar
         )
 
         // Save to database and show confirmation
