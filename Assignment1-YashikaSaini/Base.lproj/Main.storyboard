@@ -109,7 +109,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="d1I-aD-0TH">
-                                <rect key="frame" x="16" y="90" width="361" height="732"/>
+                                <rect key="frame" x="16" y="90" width="361" height="620"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -121,29 +121,29 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zy7-RK-Ong">
-                                                    <rect key="frame" x="20" y="0.0" width="133" height="85"/>
+                                                    <rect key="frame" x="20" y="0.0" width="96" height="85"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="lblbll" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TzI-My-LNd">
-                                                    <rect key="frame" x="175" y="11" width="166" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="hgfhgcvgh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnL-jy-Xbb">
+                                                    <rect key="frame" x="124" y="52" width="237" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                     <color key="textColor" red="0.69416803120000004" green="0.29407888650000003" blue="0.14516413210000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="sedcondary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnL-jy-Xbb">
-                                                    <rect key="frame" x="175" y="40" width="166" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="kjghjgv" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TzI-My-LNd">
+                                                    <rect key="frame" x="124" y="11" width="237" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                     <color key="textColor" red="0.69416803120000004" green="0.29407888650000003" blue="0.14516413210000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="avatarImageView" destination="zy7-RK-Ong" id="xkl-GD-hVl"/>
-                                            <outlet property="primaryLabel" destination="TzI-My-LNd" id="Igh-O9-kxf"/>
-                                            <outlet property="secondaryLabel" destination="bnL-jy-Xbb" id="oI2-G8-hho"/>
+                                            <outlet property="avatarImage" destination="zy7-RK-Ong" id="TBe-iU-rhN"/>
+                                            <outlet property="primaryLabel" destination="TzI-My-LNd" id="i6z-6t-C6b"/>
+                                            <outlet property="secondaryLabel" destination="bnL-jy-Xbb" id="fiw-ap-ar9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -157,7 +157,7 @@
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="d1I-aD-0TH" id="AZm-Gc-eBf"/>
+                        <outlet property="myTableView" destination="d1I-aD-0TH" id="OtI-EE-Myg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yxb-28-Q9c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -413,7 +413,7 @@
                                         <color key="textColor" red="0.69809013610000004" green="0.29015600679999998" blue="0.1412449777" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="IOj-nC-XRL">
+                                    <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="IOj-nC-XRL">
                                         <rect key="frame" x="158.66666666666669" y="0.0" width="227.66666666666669" height="50"/>
                                     </datePicker>
                                 </subviews>

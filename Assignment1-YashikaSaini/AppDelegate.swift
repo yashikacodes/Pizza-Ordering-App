@@ -11,7 +11,7 @@ import SQLite3
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var databaseName : String = "ordersdb.db"
+    var databaseName : String = "myorders.db"
     var databasePath : String = ""
     var orders: [OrderData] = []
 
@@ -46,20 +46,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if sqlite3_open(databasePath, &db) == SQLITE_OK {
             print("Successfully opened db at \(databasePath)")
-            let queryStatementString : String = "select * from orders;"
+            let queryStatementString : String = "select * from orders"
             var queryStatement: OpaquePointer? = nil
 
             if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
+                    
                     let id : Int = Int(sqlite3_column_int(queryStatement, 0))
-                    let date = String(cString: sqlite3_column_text(queryStatement, 1))
-                    let address = String(cString: sqlite3_column_text(queryStatement, 2))
+                    let cdate = sqlite3_column_text(queryStatement, 1)
+                    let caddress = sqlite3_column_text(queryStatement, 2)
+                    let cmeatToppings = sqlite3_column_text(queryStatement, 4)
+                    let cvegToppings = sqlite3_column_text(queryStatement, 5)
+                    let cavatar = sqlite3_column_text(queryStatement, 6)
+                    
+                    let date = String(cString: cdate!)
+                    
+                    let address = String(cString: caddress!)
+                
                     let size = Int(sqlite3_column_int(queryStatement, 3))
-                    let meatToppings = String(cString: sqlite3_column_text(queryStatement, 4))
-                    let vegToppings = String(cString: sqlite3_column_text(queryStatement, 5))
-                    let avatar = String(cString: sqlite3_column_text(queryStatement, 6)) // Avatar field retrieval
+                    let meatToppings = String(cString: cmeatToppings!)
+                    let vegToppings = String(cString: cvegToppings!)
+                    let avatar = String(cString: cavatar!)
+                    
+                    
 
-                    let order = OrderData()
+                    let order : OrderData = .init()
+                    
                     order.initWithData(id: id, date: date, address: address, size: size, meatToppings: meatToppings, vegToppings: vegToppings, avatar: avatar)
                     
                     orders.append(order)
@@ -89,12 +101,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var insertStatement: OpaquePointer? = nil
 
             if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
-                sqlite3_bind_text(insertStatement, 1, order.deliveryDate, -1, nil)
-                sqlite3_bind_text(insertStatement, 2, order.address, -1, nil)
+                
+                let deliveryDate = order.deliveryDate! as NSString
+                let address = order.address! as NSString
+                let meatToppings = order.meatToppings! as NSString
+                let vegToppings = order.vegToppings! as NSString
+                let avatar = order.avatar! as NSString
+                
+                
+                sqlite3_bind_text(insertStatement, 1, deliveryDate.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 2, address.utf8String, -1, nil)
                 sqlite3_bind_int(insertStatement, 3, Int32(order.size!))
-                sqlite3_bind_text(insertStatement, 4, order.meatToppings, -1, nil)
-                sqlite3_bind_text(insertStatement, 5, order.vegToppings, -1, nil)
-                sqlite3_bind_text(insertStatement, 6, order.avatar, -1, nil) // Bind the avatar string
+                sqlite3_bind_text(insertStatement, 4, meatToppings.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 5, vegToppings.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 6, avatar.utf8String, -1, nil) // Bind the avatar string
 
                 if sqlite3_step(insertStatement) == SQLITE_DONE {
                     let rowId = sqlite3_last_insert_rowid(db)
